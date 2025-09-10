@@ -1,21 +1,40 @@
-#include <stack>
 #include <iostream>
-#include <list>
-
+#include <deque>
+#include <vector>
 using namespace std;
 
 int main() {
-    int a, b = 0, temp, d = 1;
-    cin >> a;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    list<int> e(a);
+    vector<int> a;
+    int x;
+    while (cin >> x) a.push_back(x);
+    if (a.empty()) return 0;
 
-    while(b < a) {
-        cin >> temp;
-        e[b] = temp;
-        b++;
+    int pos = 0, t = 1;
+    if (a[0] == (int)a.size() - 1) {
+        t = a[0];
+        pos = 1;
+    } else {
+        t = a.size();
+        pos = 0;
     }
 
-    
-
+    for (int tc = 0; tc < t; ++tc) {
+        int n = a[pos + tc];
+        deque<int> deck;
+        for (int i = n; i >= 1; --i) {
+            deck.push_front(i);
+            for (int j = 0; j < i; ++j) {
+                deck.push_front(deck.back());
+                deck.pop_back();
+            }
+        }
+        for (int i = 0; i < n; ++i) {
+            cout << deck[i] << (i + 1 == n ? "" : " ");
+        }
+        if (tc + 1 < t) cout << '\n';
+    }
+    return 0;
 }
